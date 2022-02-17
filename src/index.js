@@ -37,7 +37,7 @@ app.post('/users', (request, response) => {
   const { name, username } = request.body;
 
   if (users.some(user => user.username === username)) {
-    return response.status(400).json({ message: "Username already exists" })
+    return response.status(400).json({ error: "Username already exists" })
   }
 
   const user = {
@@ -96,7 +96,7 @@ app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
 
   const todo = user.todos.find(todo => todo.id === id)
 
-  if (!todo) return response.status(404).json({ message: "Todo not found" })
+  if (!todo) return response.status(404).json({ error: "Todo not found" })
 
   todo.title = title
   todo.deadline = new Date(deadline)
@@ -115,7 +115,7 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
 
   const todo = user.todos.find(todo => todo.id === id)
 
-  if (!todo) return response.status(404).json({ message: "Todo not found" })
+  if (!todo) return response.status(404).json({ error: "Todo not found" })
 
   todo.done = true;
   return response.json(todo)
@@ -131,7 +131,7 @@ app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {
 
   const todo = user.todos.find(todo => todo.id === id)
 
-  if (!todo) return response.status(404).json({ message: "Todo not found" })
+  if (!todo) return response.status(404).json({ error: "Todo not found" })
 
   user.todos.splice(user.todos.indexOf(todo), 1)
 
